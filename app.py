@@ -6,14 +6,14 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Create flask app
-flask_app = Flask(__name__)
+app = Flask(__name__)
 model = pickle.load(open("model_2.pkl", "rb"))
 
-@flask_app.route("/")
+@app.route("/")
 def Home():
     return render_template("index.html")
 
-@flask_app.route("/predict", methods = ["POST"])
+@app.route("/predict", methods = ["POST"])
 def predict():
     float_features = [float(x) for x in request.form.values()]
     features = [np.array(float_features)]
@@ -59,4 +59,4 @@ def predict():
     return render_template("index.html", prediction_text = "Mahasiswa/i diprediksi akan {}".format(hasil))
 
 if __name__ == "__main__":
-    flask_app.run(host="localhost", port=5000, debug=True)
+    app.run(host="localhost", port=5000, debug=True)
